@@ -4,18 +4,18 @@
     // P(3, 14) = 1. So there is 1 integer from 1 < n < 14 where Streak(n) = 3;
 
     var sum = 0;
-    for (var i = 1; i <= 31; i++) {
-        sum += P(i, Math.pow(4, i));
-        console.log('Sum after s = ' + i + ': ' + sum);
+    for (var n = 1; n <= 31; n++) {
+        sum += P(n, Math.pow(4, n));
     }
+    console.log('The total sum is: ' + sum);
 
     function P(s, N) {
         var results = 0;
-        for (var i = 2; i < N; i++) {
+        for (var n = 2; n < N; n++) {
             Streak((k) => {
                 if (k === s)
                     ++results;
-            }, i);
+            }, n);
         };
 
         return results;
