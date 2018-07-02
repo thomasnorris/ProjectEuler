@@ -3,14 +3,25 @@
     const FILE_NAME = "names.txt";
 
     var nameArr = ReadFile(FILE_NAME);
-    console.log('nameArr: ', nameArr);
+    var _score = 0;
+
+    for (var i = 0; i < nameArr.length; i++) {
+        var name = nameArr[i].split('');
+        var score = 0;
+        name.forEach((letter) => {
+            score += ALPHABET_ARR.indexOf(letter) + 1;
+        });
+        _score += score * (i + 1);
+    }
+
+    console.log('The total of all name scores in the file is: ' + _score);
 
     function ReadFile(file) {
         var arr = require('fs')
         .readFileSync(file, 'utf8')
         .split('","')
         .map((el) => {
-            return el.replace(/"/, "").toLowerCase();
+            return el.replace(/"/, "").toUpperCase();
         });
         return arr.sort((a, b) => {
             if (a < b) return -1;
