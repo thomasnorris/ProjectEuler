@@ -11,21 +11,24 @@
 
     // must be <= 1000 for proper functionality
     const NUM_SUM = 1000;
-    var sum = 0;
+    var _sum = 0;
 
-    BreakIntoPieces(342, (p) => {
-        console.log(p);
-    });
+    BreakDown(919, (s) => {
+        console.log(s);
+    })
+
     // for (var i = 1; i <= NUM_SUM; i++) {
-    //     BreakIntoPieces(i, (pieces) => {
-    //         console.log(pieces);
+    //     BreakDown(i, (s) => {
+    //         _sum += s;
     //     });
     // }
+    // console.log(_sum);
 
-    function BreakIntoPieces(num, callback, pieces = []) {
+    function BreakDown(num, callback, pieces = []) {
         var modulo;
         var mod10 = 10;
         var mod100 = 100;
+
         num.toString().length == 2 ? modulo = mod10 : modulo = mod100;
 
         var round = Math.floor(num / modulo) * modulo;
@@ -34,33 +37,43 @@
         // if a single digit num OR the remainder is a multiple of the modulo
         if (round != 0 || remainder == 0) {
             if (modulo == mod100) {
-                pieces.push(round / modulo);
-                pieces.push(modulo);
+                AddLength(round / modulo);
+                AddLength(modulo);
             } else {
-                pieces.push(round);
+                AddLength(round);
             }
 
             // if a hundred and x; eg: one two hundred and one
             if (modulo == mod100 && remainder != 0)
-                // 'and' keyword; eg: one hundred and twenty three
-                pieces.push('and');
+                // 'and' keyword length; eg: one hundred and twenty three
+                pieces.push(3);
         }
 
         // if the number isn't found in BASE_COUNTS AND there is a remainder
         // split up the remainder
-        if (GetLength(remainder) == '' && remainder != 0) {
-            BreakIntoPieces(remainder, callback, pieces)
+        if (!InBase(remainder) && remainder != 0) {
+            BreakDown(remainder, callback, pieces)
         } else {
             if (remainder != 0)
-                pieces.push(remainder);
+                AddLength(remainder);
             // callback
-            callback(pieces);
+            callback (pieces.reduce((a, b) => {
+                return parseInt(a) + parseInt(b);
+            }));
+        }
+
+        function AddLength(num) {
+            pieces.push(GetLength(num));
         }
 
         function GetLength(num) {
             return Object.keys(BASE_COUNTS).filter((key) => {
                 return BASE_COUNTS[key].includes(num);
             }).toString();
+        }
+
+        function InBase(num) {
+            return GetLength(num) != '';
         }
     }
 })();
