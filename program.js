@@ -3,7 +3,7 @@
         3: [1, 2, 6, 10],
         4: [4, 5, 9],
         5: [3, 7, 8, 40, 50, 60],
-        6: [11, 12, 20, 30, 80, 80],
+        6: [11, 12, 20, 30, 80, 90],
         7: [15, 16, 70],
         8: [13, 14, 18, 19],
         9: [17],
@@ -14,16 +14,14 @@
     const NUM_SUM = 100;
     var sum = 0;
 
-    // for (var i = 1; i <= NUM_SUM; i++) {
-    //     if (GetLength(i) != '')
-    //         sum += i;
-    //     else
-    //         Split(i);
-    // }
-
-    Split(999, (pieces) => {
-        console.log(pieces);
-    });
+    for (var i = 1; i <= NUM_SUM; i++) {
+        if (GetLength(i) != '')
+            console.log(i);
+        else
+            Split(i, (pieces) => {
+                console.log(pieces);
+            });
+    }
 
     function Split(num, callback, pieces = []) {
         var modulo;
@@ -31,7 +29,8 @@
 
         var round = Math.floor(num / modulo) * modulo;
         var remainder = num - round;
-        pieces.push(round);
+        if (round != 0)
+            pieces.push(round);
         if (GetLength(remainder) == '')
             Split(remainder, callback, pieces)
         else {
