@@ -18,12 +18,14 @@
             _sum += s;
         });
     }
+
     console.log(_sum);
 
     function BreakDown(num, callback, pieces = []) {
         if (InBase(num)) {
             var length = parseInt(GetLength(num));
-            if (num == 1000)
+            // hard code 1000 as the max and 100 as needing extra length to account for the `and`
+            if (num == 1000 || num == 100)
                 length += 3;
 
             callback(length);
