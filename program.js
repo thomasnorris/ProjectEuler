@@ -9,7 +9,8 @@
         9: [17]
     }
 
-    const NUM_SUM = 204;
+    // must be <= 1000 for proper functionality
+    const NUM_SUM = 1000;
     var sum = 0;
 
     for (var i = 1; i <= NUM_SUM; i++) {
