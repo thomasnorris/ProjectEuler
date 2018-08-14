@@ -13,18 +13,23 @@
     const NUM_SUM = 1000;
     var _sum = 0;
 
-    BreakDown(919, (s) => {
-        console.log(s);
-    })
-
-    // for (var i = 1; i <= NUM_SUM; i++) {
-    //     BreakDown(i, (s) => {
-    //         _sum += s;
-    //     });
-    // }
-    // console.log(_sum);
+    for (var i = 1; i <= NUM_SUM; i++) {
+        BreakDown(i, (s) => {
+            _sum += s;
+        });
+    }
+    console.log(_sum);
 
     function BreakDown(num, callback, pieces = []) {
+        if (InBase(num)) {
+            var length = parseInt(GetLength(num));
+            if (num == 1000)
+                length += 3;
+
+            callback(length);
+            return;
+        }
+
         var modulo;
         var mod10 = 10;
         var mod100 = 100;
@@ -57,8 +62,8 @@
             if (remainder != 0)
                 AddLength(remainder);
             // callback
-            callback (pieces.reduce((a, b) => {
-                return parseInt(a) + parseInt(b);
+            callback(pieces.reduce((a, b) => {
+                return a + b;
             }));
         }
 
@@ -67,13 +72,18 @@
         }
 
         function GetLength(num) {
-            return Object.keys(BASE_COUNTS).filter((key) => {
+            var length = parseInt(Object.keys(BASE_COUNTS).filter((key) => {
                 return BASE_COUNTS[key].includes(num);
-            }).toString();
+            }).toString());
+
+            if (!length)
+                length = '';
+
+            return length;
         }
 
         function InBase(num) {
-            return GetLength(num) != '';
+            return GetLength(num).toString() != '';
         }
     }
 })();
