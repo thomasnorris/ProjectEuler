@@ -14,9 +14,30 @@
     const NUM_SUM = 100;
     var sum = 0;
 
-    for (var i = 1; i <= NUM_SUM; i++) {
-        if (GetLength(i) != '')
-            sum += i;
+    // for (var i = 1; i <= NUM_SUM; i++) {
+    //     if (GetLength(i) != '')
+    //         sum += i;
+    //     else
+    //         Split(i);
+    // }
+
+    Split(999, (pieces) => {
+        console.log(pieces);
+    });
+
+    function Split(num, callback, pieces = []) {
+        var modulo;
+        num.toString().length == 2 ? modulo = 10 : modulo = 100;
+
+        var round = Math.floor(num / modulo) * modulo;
+        var remainder = num - round;
+        pieces.push(round);
+        if (GetLength(remainder) == '')
+            Split(remainder, callback, pieces)
+        else {
+            pieces.push(remainder);
+            callback(pieces);
+        }
     }
 
     function GetLength(num) {
