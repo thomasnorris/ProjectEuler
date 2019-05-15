@@ -1,16 +1,21 @@
 (function() {
 
-    var smooths = [];
-    var upTo = 10000000000;
+    var _dataFile = "DataFile.txt";
+    var _fs = require("fs");
+    var _upTo = 10000000000;
 
-    for (var i = 1; i <= upTo; ++i) {
+    ClearFile();
+
+    for (var i = 1; i <= _upTo; ++i) {
         IsSmooth(i, (yes) => {
             if (yes)
-                smooths.push(i);
+                AppendFile(i);
         })
     }
 
-    console.log(smooths.length);
+    CountSmooths((num) => {
+        console.log("Smooths: " + num);
+    });
 
     function IsSmooth(n, callback) {
         PrimeFactorize(n, (factors) => {
@@ -54,5 +59,32 @@
         arr = Array.from(new Set(arr));
 
         callback(arr);
+    }
+
+    function AppendFile(n) {
+        _fs.appendFileSync(_dataFile, n + "\n", (err) => {
+            if (err)
+                console.log(err);
+        });
+    }
+
+    function ClearFile() {
+        _fs.writeFileSync(_dataFile, "", () => {
+            if (err)
+                console.log(err);
+        });
+    }
+
+    function CountSmooths(callback) {
+        var count = 0;
+        _fs.createReadStream(_dataFile)
+            .on('data', (chunk) => {
+                for (var i = 0; i < chunk.length; ++i)
+                    if (chunk[i] == 10)
+                        count++;
+            })
+            .on('end', () => {
+                callback(count);
+            });
     }
 })();
