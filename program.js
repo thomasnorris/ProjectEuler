@@ -1,6 +1,22 @@
 (function() {
 
-    console.log(Rad(504));
+    const N = 10;
+    var _arr = [];
+
+    for (var i = 1; i <= N; ++i)
+        _arr.push([i, Rad(i)]);
+
+    _arr.sort((a, b) => {
+        if (a[1] === b[1])
+            return a[0] - b[0]
+        return a[1] - b[1];
+    });
+
+    console.log(E(4));
+
+    function E(k) {
+        return _arr[k--][0];
+    }
 
     function Rad(n) {
         var rad = 1;
