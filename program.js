@@ -1,6 +1,8 @@
 (function() {
 
-    const N = 10;
+    const N = Math.pow(10, 5);
+    const K = Math.pow(10, 4);
+
     var _arr = [];
 
     for (var i = 1; i <= N; ++i)
@@ -12,10 +14,10 @@
         return a[1] - b[1];
     });
 
-    console.log(E(4));
+    console.log(E(K));
 
     function E(k) {
-        return _arr[k--][0];
+        return _arr[--k][0];
     }
 
     function Rad(n) {
